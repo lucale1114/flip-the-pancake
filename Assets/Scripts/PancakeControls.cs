@@ -69,7 +69,7 @@ public class NewBehaviourScript : MonoBehaviour
     IEnumerator checkPancakeValid(Vector3 startPos)
     {
         yield return new WaitForSeconds(1);
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(startPos, startPos + Vector2.up * 2);
+        /*RaycastHit2D raycastHit2D = Physics2D.Raycast(startPos, startPos + Vector2.up * 2);
         if (raycastHit2D.collider.CompareTag("Pancake"))
         {
             print("is valid!");
@@ -80,7 +80,7 @@ public class NewBehaviourScript : MonoBehaviour
         {
             print("not valid");
             Destroy(gameObject);
-        }
+        }*/
     }
 
     private void OnCollisionEnter2D(Collision2D other)
