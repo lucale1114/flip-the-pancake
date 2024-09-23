@@ -426,7 +426,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   launchForce: 10
   moveToOriginalPosSpeed: 20
-  panRotationSpeed: 20
+  panRotationSpeed: 80
   timeSpaceKeyDown: 0
   rotatePan: 0
   pivot: {fileID: 1233324150}
