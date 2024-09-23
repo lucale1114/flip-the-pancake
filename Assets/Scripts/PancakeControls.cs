@@ -24,7 +24,7 @@ public class NewBehaviourScript : MonoBehaviour
         rotationAcceleration += (axisHorizontalDirection * PANCAKE_FLIP_SPEED) * Time.deltaTime;
         rotationAcceleration = Mathf.Clamp(rotationAcceleration, -1.5f, 1.5f);
         rb.SetRotation(rb.rotation + rotationAcceleration);
-        rb.AddForce(new Vector2(axisHorizontalDirection * HORIZONTAL_MOVESPEED * Time.deltaTime, axisVerticalDirection /3f));
+        rb.AddForce(new Vector2(axisHorizontalDirection * HORIZONTAL_MOVESPEED * Time.deltaTime, axisVerticalDirection / 3f));
     }
 
     void Update()
@@ -34,9 +34,9 @@ public class NewBehaviourScript : MonoBehaviour
             return;
         }
         MovementControls();
-        if (rotationAcceleration > 0) 
+        if (rotationAcceleration > 0)
         {
-            rotationAcceleration -= 0.002f; 
+            rotationAcceleration -= 0.002f;
         }
         else if (rotationAcceleration < 0)
         {
@@ -47,10 +47,14 @@ public class NewBehaviourScript : MonoBehaviour
     IEnumerator checkPancakeValid(Vector3 startPos, PlateScript plate)
     {
         yield return new WaitForSeconds(1);
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(startPos, -Vector2.up);
-
-        Debug.DrawLine(startPos, -Vector2.up, Color.red, 5);
-        if (raycastHit2D.collider.CompareTag("Pancake"))
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(startPos, -transform.right, 100);
+        Debug.DrawRay(startPos, -transform.right, Color.red, 5);
+        if (raycastHit2D.collider == null)
+        {
+            print("not valid");
+            Destroy(gameObject);
+        }
+        if (raycastHit2D.collider.gameObject.CompareTag("Pancake"))
         {
             print("is valid!");
             if (plate)
@@ -59,7 +63,8 @@ public class NewBehaviourScript : MonoBehaviour
             }
             rb.bodyType = RigidbodyType2D.Static;
 
-        } else
+        }
+        else
         {
             print("not valid");
             Destroy(gameObject);
@@ -69,7 +74,7 @@ public class NewBehaviourScript : MonoBehaviour
     IEnumerator checkPancakeValid(Vector3 startPos)
     {
         yield return new WaitForSeconds(1);
-        /*RaycastHit2D raycastHit2D = Physics2D.Raycast(startPos, startPos + Vector2.up * 2);
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(startPos, startPos + new Vector3(0,1));
         if (raycastHit2D.collider.CompareTag("Pancake"))
         {
             print("is valid!");
@@ -80,7 +85,7 @@ public class NewBehaviourScript : MonoBehaviour
         {
             print("not valid");
             Destroy(gameObject);
-        }*/
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -95,10 +100,5 @@ public class NewBehaviourScript : MonoBehaviour
                 StartCoroutine(checkPancakeValid(other.transform.position, plateScript));
             }
         }
-    }
-
-    private void PlacedPancake()
-    {
-        
     }
 }
