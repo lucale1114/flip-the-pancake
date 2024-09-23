@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class PancakeLaunch : MonoBehaviour
@@ -47,6 +50,7 @@ public class PancakeLaunch : MonoBehaviour
             }
         }
     }
+
     void RotatePan()
     {
         if (rotatePan)
@@ -60,6 +64,7 @@ public class PancakeLaunch : MonoBehaviour
             }
         }
     }
+
     void LaunchPancake()
     {
         rb.velocity = (Vector2)transform.up * launchForce * timeSpaceKeyDown;
@@ -69,6 +74,7 @@ public class PancakeLaunch : MonoBehaviour
 
         timeSpaceKeyDown = 0;
     }
+
     void CheckMaxYDistance()
     {
         if (transform.position.y > newPos.y)
@@ -77,6 +83,7 @@ public class PancakeLaunch : MonoBehaviour
             rb.velocity = Vector2.zero;
         }
     }
+
     void MoveToOriginalPos()
     {
         if (moveToOriginalPos)
