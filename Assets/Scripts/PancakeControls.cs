@@ -69,8 +69,8 @@ public class NewBehaviourScript : MonoBehaviour
     IEnumerator checkPancakeValid(Vector3 startPos)
     {
         yield return new WaitForSeconds(1);
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(startPos, Vector2.up * 2);
-        if (raycastHit2D.collider != null)
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(startPos, startPos + Vector2.up * 2);
+        if (raycastHit2D.collider.CompareTag("Pancake"))
         {
             print("is valid!");
             rb.bodyType = RigidbodyType2D.Static;
@@ -91,8 +91,8 @@ public class NewBehaviourScript : MonoBehaviour
             if (plateScript.firstPancake == null)
             {
                 canMove = false;
+                print("landed");
                 StartCoroutine(checkPancakeValid(other.transform.position, plateScript));
-               
             }
         }
     }
