@@ -96,16 +96,23 @@ public class PancakeLaunch : MonoBehaviour
         if (moveToOriginalPos)
         {
             Vector2 distance = (Vector2)transform.position - originalPos;
-            if (Vector2.SqrMagnitude(distance) > 0.01f || Mathf.Abs(transform.rotation.z) > 0.01f)
+            if (Vector2.SqrMagnitude(distance) > 0.001f || Mathf.Abs(transform.rotation.z) > 0.001f)
             {
-                if (Vector2.SqrMagnitude(distance) > 0.01f)
+                if (Vector2.SqrMagnitude(distance) > 0.001f)
                 {
                     rb.position = Vector2.MoveTowards(transform.position, originalPos, moveToOriginalPosSpeed * Time.deltaTime);
                 }
 
-                if (Mathf.Abs(transform.rotation.z) > 0.01f)
+                if (Mathf.Abs(transform.rotation.z) > 0.001f)
                 {
-                    transform.Rotate(Vector3.forward * 20 * Time.deltaTime);
+                    if (transform.rotation.z < 0)
+                    {
+                        transform.Rotate(Vector3.forward * 40 * Time.deltaTime);
+                    }
+                    else
+                    {
+                        transform.Rotate(-Vector3.forward * 40 * Time.deltaTime);
+                    }
                 }
             }
             else
