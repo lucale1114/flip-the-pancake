@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class PancakeControls : MonoBehaviour
 {
     public Rigidbody2D rb;
     readonly float PANCAKE_FLIP_SPEED = -4f;
     readonly float HORIZONTAL_MOVESPEED = 155f;
+    public bool validPosition = false;
 
     private bool canMove = true;
     private float rotationAcceleration = 0;
@@ -44,17 +45,21 @@ public class NewBehaviourScript : MonoBehaviour
         }
     }
 
-    IEnumerator checkPancakeValid(Vector3 startPos, PlateScript plate)
+    /*IEnumerator checkPancakeValid(Vector3 startPos, PlateScript plate)
     {
         yield return new WaitForSeconds(1);
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(startPos, -transform.right, 100);
-        Debug.DrawRay(startPos, -transform.right, Color.red, 5);
-        if (raycastHit2D.collider == null)
+        RaycastHit2D raycastHit2DLeft = Physics2D.Raycast(startPos + new Vector3(0.75f, 0), -transform.right/4);
+        RaycastHit2D raycastHit2DRight = Physics2D.Raycast(startPos - new Vector3(0.75f, 0), -transform.right/4);
+        Debug.DrawRay(startPos + new Vector3(0.75f, 0), -transform.right/4, Color.red, 500);
+        Debug.DrawRay(startPos - new Vector3(0.75f, 0), -transform.right/4, Color.red, 500);
+        print(raycastHit2DRight);
+        print(raycastHit2DLeft);
+        if (raycastHit2DLeft.collider == null && raycastHit2DRight.collider == null)
         {
             print("not valid");
             Destroy(gameObject);
         }
-        if (raycastHit2D.collider.gameObject.CompareTag("Pancake"))
+        if (raycastHit2DLeft.collider.gameObject.CompareTag("Pancake") || raycastHit2DRight.collider.gameObject.CompareTag("Pancake"))
         {
             print("is valid!");
             if (plate)
@@ -69,24 +74,7 @@ public class NewBehaviourScript : MonoBehaviour
             print("not valid");
             Destroy(gameObject);
         }
-    }
-
-    IEnumerator checkPancakeValid(Vector3 startPos)
-    {
-        yield return new WaitForSeconds(1);
-        RaycastHit2D raycastHit2D = Physics2D.Raycast(startPos, startPos + new Vector3(0,1));
-        if (raycastHit2D.collider.CompareTag("Pancake"))
-        {
-            print("is valid!");
-            rb.bodyType = RigidbodyType2D.Static;
-
-        }
-        else
-        {
-            print("not valid");
-            Destroy(gameObject);
-        }
-    }
+    }*/
 
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -96,9 +84,17 @@ public class NewBehaviourScript : MonoBehaviour
             if (plateScript.firstPancake == null)
             {
                 canMove = false;
-                print("landed");
-                StartCoroutine(checkPancakeValid(other.transform.position, plateScript));
+                Invoke("delete", 1.5f);
+                StartCoroutine(plateScript.pancakeCheck());
             }
+        }
+    }
+
+    private void delete()
+    {
+        if (!validPosition)
+        {
+            Destroy(gameObject);
         }
     }
 }
