@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CatPawController : MonoBehaviour
 {
-    [SerializeField] public int speed;
+    [SerializeField] float speed;
     [SerializeField] float minPos;
     [SerializeField] float maxPos;
 
@@ -17,18 +17,18 @@ public class CatPawController : MonoBehaviour
 
     void Update()
     {
-        if (nextPos.y > transform.position.y)
+        if (nextPos.y > transform.localPosition.y)
         {
-            transform.position += new Vector3(0, speed * Time.deltaTime, 0);
+            transform.localPosition += new Vector3(0, speed * Time.deltaTime, 0);
         }
-        if (nextPos.y < transform.position.y)
+        if (nextPos.y < transform.localPosition.y)
         {
-            transform.position += new Vector3(0, -speed * Time.deltaTime, 0);
+            transform.localPosition += new Vector3(0, -speed * Time.deltaTime, 0);
         }
 
-        Vector2 distance = (Vector2)transform.position - nextPos; 
+        Vector2 distance = (Vector2)transform.localPosition - nextPos;
 
-        if (Vector2.SqrMagnitude(distance) < 0.1f)
+        if (Vector2.SqrMagnitude(distance) < 0.01f)
         {
             GenerateNewPos();
         }
@@ -36,6 +36,6 @@ public class CatPawController : MonoBehaviour
      
     void GenerateNewPos()
     {
-        nextPos = new Vector2(transform.position.x, Random.Range(minPos, maxPos));
+        nextPos = new Vector2(transform.localPosition.x, Random.Range(minPos, maxPos));
     }
 }
