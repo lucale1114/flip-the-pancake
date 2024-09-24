@@ -11,7 +11,7 @@ public class PancakeLaunch : MonoBehaviour
     public int maxForce;
     public float timeSpaceKeyDown;
 
-    float pancakeOffset;
+    float pancakeOffsetY;
     bool selectForce = true;
     bool moveToOriginalPos;
     bool rotatePan;
@@ -24,7 +24,7 @@ public class PancakeLaunch : MonoBehaviour
 
     private void Start()
     {
-        originalPos = pivot.transform.position;
+        originalPos = transform.position;
     }
 
     private void Update()
@@ -78,22 +78,18 @@ public class PancakeLaunch : MonoBehaviour
     {
         rb.velocity = (Vector2)transform.up * launchForce * timeSpaceKeyDown;
 
-        pancakeOffset = timeSpaceKeyDown * 2;
-        newPos = originalPos + new Vector2(0, pancakeOffset);
+        pancakeOffsetY = timeSpaceKeyDown * 2;
+        newPos = originalPos + new Vector2(0, pancakeOffsetY);
 
         timeSpaceKeyDown = 0;
     }
 
     void CheckMaxYDistance()
     {
-        if (!moveToOriginalPos)
+        if (transform.position.y > newPos.y)
         {
-            Vector2 distance = (Vector2)pivot.transform.position - originalPos;
-            if (Vector2.SqrMagnitude(distance) > pancakeOffset)
-            {
-                moveToOriginalPos = true;
-                rb.velocity = Vector2.zero;
-            }
+            moveToOriginalPos = true;
+            rb.velocity = Vector2.zero;
         }
     }
 
