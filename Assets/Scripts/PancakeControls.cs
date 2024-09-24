@@ -12,7 +12,9 @@ public class PancakeControls : MonoBehaviour
     private bool canMove = true;
     private float rotationAcceleration = 0;
     public PancakeSpawner spawner;
-
+    private float deleteTimer;
+    private bool deleteStarted = false;
+    private bool jumped = false;
     void Start()
     {
         //rb.AddForce(new Vector2(400, 500));
@@ -23,19 +25,19 @@ public class PancakeControls : MonoBehaviour
         float axisHorizontalDirection = Input.GetAxis("Horizontal");
         float axisVerticalDirection = Input.GetAxis("Vertical");
 
+        if (Input.GetKeyDown(KeyCode.UpArrow) && !jumped)
+        {
+            jumped = true;
+            rb.velocity = new Vector3(rb.velocity.x, 10);
+        }
+
         rotationAcceleration += (axisHorizontalDirection * -PANCAKE_FLIP_SPEED) * Time.deltaTime;
         rotationAcceleration = Mathf.Clamp(rotationAcceleration, -1.5f, 1.5f);
+        axisVerticalDirection = Mathf.Max(axisVerticalDirection, 0);
+
         rb.SetRotation(rb.rotation + rotationAcceleration);
         rb.AddForce(new Vector2(axisHorizontalDirection * HORIZONTAL_MOVESPEED * Time.deltaTime, axisVerticalDirection / 3f));
-    }
 
-    void Update()
-    {
-        if (!canMove)
-        {
-            return;
-        }
-        MovementControls();
         if (rotationAcceleration > 0)
         {
             rotationAcceleration -= 0.002f;
@@ -46,16 +48,23 @@ public class PancakeControls : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if (!canMove)
+        {
+            return;
+        }
+        MovementControls();
+    }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") || validPosition)
         {
             return;
         }
         if ((other.gameObject.CompareTag("Plate") || other.gameObject.CompareTag("Pancake")) && canMove)
         {
-            canMove = false;
-
             PancakeChecker plateScript = other.gameObject.GetComponent<PancakeChecker>();
             if (plateScript.canCheck)
             {
@@ -63,15 +72,35 @@ public class PancakeControls : MonoBehaviour
                 StartCoroutine(plateScript.pancakeCheck());
             }
         }
-        Invoke("delete", 2f);
+        canMove = false;
+        if (deleteTimer == 0)
+        {
+            deleteStarted = true;
+            deleteTimer += 2f;
+        } 
+        else
+        {
+            deleteTimer += 0.2f;
+        }
+        if (deleteStarted)
+        {
+            StartCoroutine(delete());
+            deleteStarted = false;
+        }
+
     }
 
-    private void delete()
+    IEnumerator delete()
     {
+        while (deleteTimer > 0)
+        {
+            yield return new WaitForSeconds(0.1f);
+            deleteTimer -= 0.1f;
+        }
         if (!validPosition)
         {
+            spawner.spawnNewPancake(gameObject);
             Destroy(gameObject);
-            spawner.spawnNewPancake();
         }
     }
 }
