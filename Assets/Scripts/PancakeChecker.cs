@@ -11,22 +11,23 @@ public class PancakeChecker : MonoBehaviour
     public bool isInBox = false;
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (pancake == null)
+        if (pancake == null && other.gameObject.CompareTag("Pancake"))
         {
             pancake = other.gameObject;
         }
-        print("ENTERED");
         isInBox = true;
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        print("EXITED");
         isInBox = false;
     }
     private void newPancake()
     {
-        spawner.spawnNewPancake(gameObject);
+        print("spawn check");
+        pancake.GetComponent<PancakeControls>().enabled = false;
+        pancake.tag = "Plate";
+        spawner.spawnNewPancake();
     }
 
     public IEnumerator pancakeCheck()
@@ -35,11 +36,16 @@ public class PancakeChecker : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         if (isInBox) 
         {
+            canCheck = false;
             pancake.GetComponent<PancakeControls>().validPosition = true;
-            print("pancake");
             pancake.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            print("pancake");
             Invoke("newPancake", 1);
+            pancake.GetComponent<PancakeChecker>().canCheck = true;
+            this.enabled = false;
+        } else
+        {
+            canCheck = true;
         }
-        canCheck = true;
     }
 }

@@ -8,7 +8,6 @@ public class PancakeControls : MonoBehaviour
     readonly float PANCAKE_FLIP_SPEED = 10f;
     readonly float HORIZONTAL_MOVESPEED = 155f;
     public bool validPosition = false;
-    public bool nextToCheck = false;
     private bool canMove = true;
     private float rotationAcceleration = 0;
     public PancakeSpawner spawner;
@@ -33,7 +32,7 @@ public class PancakeControls : MonoBehaviour
 
         rotationAcceleration += (axisHorizontalDirection * -PANCAKE_FLIP_SPEED) * Time.deltaTime;
         rotationAcceleration = Mathf.Clamp(rotationAcceleration, -1.5f, 1.5f);
-        axisVerticalDirection = Mathf.Max(axisVerticalDirection, 0);
+        axisVerticalDirection = Mathf.Min(axisVerticalDirection, 0);
 
         rb.SetRotation(rb.rotation + rotationAcceleration);
         rb.AddForce(new Vector2(axisHorizontalDirection * HORIZONTAL_MOVESPEED * Time.deltaTime, axisVerticalDirection / 3f));
@@ -63,7 +62,7 @@ public class PancakeControls : MonoBehaviour
         {
             return;
         }
-        if ((other.gameObject.CompareTag("Plate") || other.gameObject.CompareTag("Pancake")) && canMove)
+        if ((other.gameObject.CompareTag("Plate") && canMove))
         {
             PancakeChecker plateScript = other.gameObject.GetComponent<PancakeChecker>();
             if (plateScript.canCheck)
@@ -80,7 +79,7 @@ public class PancakeControls : MonoBehaviour
         } 
         else
         {
-            deleteTimer += 0.2f;
+            deleteTimer += 0.5f;
         }
         if (deleteStarted)
         {
@@ -99,7 +98,9 @@ public class PancakeControls : MonoBehaviour
         }
         if (!validPosition)
         {
-            spawner.spawnNewPancake(gameObject);
+            print("spawn pan");
+
+            spawner.spawnNewPancake();
             Destroy(gameObject);
         }
     }

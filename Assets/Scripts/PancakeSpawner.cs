@@ -8,12 +8,11 @@ public class PancakeSpawner : MonoBehaviour
 
     void Start()
     {
-        spawnNewPancake(gameObject);
+        spawnNewPancake();
     }
 
-    public void spawnNewPancake(GameObject spawner)
+    public void spawnNewPancake()
     {
-        print(spawner.name);
         GameObject newPancake = Instantiate(originalPancake);
         newPancake.SetActive(true);
     }
