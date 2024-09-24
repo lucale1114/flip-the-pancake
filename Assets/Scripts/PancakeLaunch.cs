@@ -8,12 +8,13 @@ public class PancakeLaunch : MonoBehaviour
     [SerializeField] int launchForce;
     [SerializeField] int moveToOriginalPosSpeed;
     [SerializeField] int panRotationSpeed;
-    [SerializeField] float timeSpaceKeyDown;
+    public int maxForce;
+    public float timeSpaceKeyDown;
 
     float pancakeOffsetY;
     bool selectForce = true;
     bool moveToOriginalPos;
-    [SerializeField] bool rotatePan;
+    bool rotatePan;
 
     Vector2 originalPos;
     Vector2 newPos;
@@ -41,6 +42,7 @@ public class PancakeLaunch : MonoBehaviour
             if (Input.GetKey(KeyCode.Space) && !moveToOriginalPos && !rotatePan)
             {
                 timeSpaceKeyDown += Time.deltaTime;
+                timeSpaceKeyDown = Mathf.Clamp(timeSpaceKeyDown, 0, maxForce);
             }
 
             if (Input.GetKeyUp(KeyCode.Space) && !rotatePan)
