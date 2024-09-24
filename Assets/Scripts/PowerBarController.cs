@@ -23,8 +23,6 @@ public class PowerBarController : MonoBehaviour
         float maxForce = pan.GetComponent<PancakeLaunch>().maxForce;
         currentForce = Mathf.Clamp(currentForce, 0, maxForce);
 
-        Debug.Log(currentForce);
-
         float newPos = (currentForce / maxForce) * posDifference;
 
         rectTransform.localPosition = new Vector2(rectTransform.localPosition.x, newPos + minPos);
