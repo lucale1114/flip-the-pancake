@@ -26,13 +26,14 @@ public class CatPawController : MonoBehaviour
             transform.position += new Vector3(0, -speed * Time.deltaTime, 0);
         }
 
-        Vector2 distance = nextPos - (Vector2)transform.position;
-        if (Vector2.SqrMagnitude(distance) < 0.01f)
+        Vector2 distance = (Vector2)transform.position - nextPos; 
+
+        if (Vector2.SqrMagnitude(distance) < 0.1f)
         {
             GenerateNewPos();
         }
     }
-
+     
     void GenerateNewPos()
     {
         nextPos = new Vector2(transform.position.x, Random.Range(minPos, maxPos));

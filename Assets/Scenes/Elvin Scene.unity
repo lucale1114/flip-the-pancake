@@ -265,9 +265,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad5f866750ab144438af5e5c0f7ec594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 1
   minPos: -0.5
-  maxPos: 1
+  maxPos: 0.9
 --- !u!1 &427891094
 GameObject:
   m_ObjectHideFlags: 0
@@ -983,6 +983,8 @@ MonoBehaviour:
   spawner: {fileID: 0}
   trigger: {fileID: 1538731580}
   canCheck: 0
+  pancake: {fileID: 0}
+  isInBox: 0
 --- !u!61 &1538731582
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1306,7 +1308,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1888109088}
   validPosition: 0
-  nextToCheck: 0
   spawner: {fileID: 0}
 --- !u!61 &1888109090
 BoxCollider2D:
@@ -1438,7 +1439,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1899072811
 Transform:
   m_ObjectHideFlags: 0
@@ -1563,9 +1564,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad5f866750ab144438af5e5c0f7ec594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 1
   minPos: -0.5
-  maxPos: 1
+  maxPos: 0.9
 --- !u!1 &1987518581
 GameObject:
   m_ObjectHideFlags: 0
