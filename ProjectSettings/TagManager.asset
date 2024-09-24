@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Plate
   - Pancake
+  - KillArea
   layers:
   - Default
   - TransparentFX

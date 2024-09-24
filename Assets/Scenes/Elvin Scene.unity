@@ -495,7 +495,7 @@ GameObject:
   - component: {fileID: 1247676735}
   m_Layer: 0
   m_Name: PanPivot
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -775,8 +775,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5601165f11cabf547bc4aae8321df1d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstPancake: {fileID: 0}
+  spawner: {fileID: 0}
   trigger: {fileID: 1538731580}
+  canCheck: 0
 --- !u!61 &1538731582
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -904,7 +905,7 @@ GameObject:
   - component: {fileID: 1839121367}
   m_Layer: 0
   m_Name: Pan
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1013,7 +1014,6 @@ MonoBehaviour:
   panRotationSpeed: 80
   maxForce: 2
   timeSpaceKeyDown: 0
-  rotatePan: 0
   pivot: {fileID: 1247676734}
   rb: {fileID: 1839121368}
 --- !u!212 &1839121370
@@ -1129,6 +1129,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1888109088}
   validPosition: 0
+  nextToCheck: 0
+  spawner: {fileID: 0}
 --- !u!61 &1888109090
 BoxCollider2D:
   m_ObjectHideFlags: 0
