@@ -14,7 +14,7 @@ public class PancakeControls : MonoBehaviour
 
     void Start()
     {
-        rb.AddForce(new Vector2(400, 500));
+        //rb.AddForce(new Vector2(400, 500));
     }
 
     private void MovementControls()
