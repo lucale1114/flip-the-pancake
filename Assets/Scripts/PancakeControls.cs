@@ -10,10 +10,13 @@ public class PancakeControls : MonoBehaviour
     public bool validPosition = false;
     private bool canMove = true;
     private float rotationAcceleration = 0;
-    public PancakeSpawner spawner;
+    public PancakeManager gameManager;
+    public int pancakeScore = 1000;
     private float deleteTimer;
     private bool deleteStarted = false;
     private bool jumped = false;
+
+    int tick = 0;
     void Start()
     {
         //rb.AddForce(new Vector2(400, 500));
@@ -44,6 +47,11 @@ public class PancakeControls : MonoBehaviour
         else if (rotationAcceleration < 0)
         {
             rotationAcceleration += 0.002f;
+        }
+        if (tick > 1000 && canMove)
+        {
+            tick = 0;
+            pancakeScore -= 1;
         }
     }
 
@@ -100,7 +108,7 @@ public class PancakeControls : MonoBehaviour
         {
             print("spawn pan");
 
-            spawner.spawnNewPancake();
+            gameManager.spawnNewPancake();
             Destroy(gameObject);
         }
     }

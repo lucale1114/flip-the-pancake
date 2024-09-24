@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PancakeChecker : MonoBehaviour
 {
-    public PancakeSpawner spawner;
+    public PancakeManager gameManager;
     public Collider2D trigger;
     public bool canCheck;
     public GameObject pancake = null;
@@ -27,7 +27,7 @@ public class PancakeChecker : MonoBehaviour
         print("spawn check");
         pancake.GetComponent<PancakeControls>().enabled = false;
         pancake.tag = "Plate";
-        spawner.spawnNewPancake();
+        gameManager.spawnNewPancake();
     }
 
     public IEnumerator pancakeCheck()
@@ -39,6 +39,7 @@ public class PancakeChecker : MonoBehaviour
             canCheck = false;
             pancake.GetComponent<PancakeControls>().validPosition = true;
             pancake.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            gameManager.scoreAPancake(pancake.GetComponent<PancakeControls>().pancakeScore);
             print("pancake");
             Invoke("newPancake", 1);
             pancake.GetComponent<PancakeChecker>().canCheck = true;
