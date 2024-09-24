@@ -11,27 +11,26 @@ public class PancakeLaunch : MonoBehaviour
     public int maxForce;
     public float timeSpaceKeyDown;
 
-    float pancakeOffsetY;
+    float pancakeOffset;
     bool selectForce = true;
     bool moveToOriginalPos;
     bool rotatePan;
 
     Vector2 originalPos;
-    Vector2 newPos;
 
     public GameObject pivot;
     public Rigidbody2D rb;
 
     private void Start()
     {
-        originalPos = transform.position;
+        originalPos = pivot.transform.position;
     }
 
     private void Update()
     {
         PlayerInput();
         RotatePan();
-        CheckMaxYDistance();
+        CheckMaxDistance();
         MoveToOriginalPos();
     }
 
@@ -76,17 +75,17 @@ public class PancakeLaunch : MonoBehaviour
 
     void LaunchPancake()
     {
-        rb.velocity = (Vector2)transform.up * launchForce * timeSpaceKeyDown;
+        rb.velocity = (Vector2)pivot.transform.up * launchForce * timeSpaceKeyDown;
 
-        pancakeOffsetY = timeSpaceKeyDown * 2;
-        newPos = originalPos + new Vector2(0, pancakeOffsetY);
+        pancakeOffset = timeSpaceKeyDown * 2;
 
         timeSpaceKeyDown = 0;
     }
 
-    void CheckMaxYDistance()
+    void CheckMaxDistance()
     {
-        if (transform.position.y > newPos.y)
+        Vector2 distance = (Vector2)pivot.transform.position - originalPos;
+        if (Vector2.SqrMagnitude(distance) > pancakeOffset)
         {
             moveToOriginalPos = true;
             rb.velocity = Vector2.zero;
@@ -97,32 +96,32 @@ public class PancakeLaunch : MonoBehaviour
     {
         if (moveToOriginalPos)
         {
-            Vector2 distance = (Vector2)transform.position - originalPos;
-            if (Vector2.SqrMagnitude(distance) > 0.001f || Mathf.Abs(transform.rotation.z) > 0.001f)
+            Vector2 distance = (Vector2)pivot.transform.position - originalPos;
+            if (Vector2.SqrMagnitude(distance) > 0.001f || Mathf.Abs(pivot.transform.rotation.z) > 0.001f)
             {
                 if (Vector2.SqrMagnitude(distance) > 0.001f)
                 {
-                    rb.position = Vector2.MoveTowards(transform.position, originalPos, moveToOriginalPosSpeed * Time.deltaTime);
+                    rb.position = Vector2.MoveTowards(pivot.transform.position, originalPos, moveToOriginalPosSpeed * Time.deltaTime);
                 }
 
-                if (Mathf.Abs(transform.rotation.z) > 0.001f)
+                if (Mathf.Abs(pivot.transform.rotation.z) > 0.001f)
                 {
-                    if (transform.rotation.z < 0)
+                    if (pivot.transform.rotation.z < 0)
                     {
-                        transform.Rotate(Vector3.forward * 40 * Time.deltaTime);
+                        pivot.transform.Rotate(Vector3.forward * 40 * Time.deltaTime);
                     }
                     else
                     {
-                        transform.Rotate(-Vector3.forward * 40 * Time.deltaTime);
+                        pivot.transform.Rotate(-Vector3.forward * 40 * Time.deltaTime);
                     }
                 }
             }
             else
             {
-                rb.position = originalPos;
+                pivot.transform.position = originalPos;
                 moveToOriginalPos = false;
                 selectForce = true;
-                transform.rotation = Quaternion.Euler(0, 0, 0);
+                pivot.transform.rotation = Quaternion.Euler(0, 0, 0);
             }
         }
     }
