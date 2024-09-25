@@ -34,7 +34,8 @@ public class PancakeChecker : MonoBehaviour
     {
         print("checkinit");
         yield return new WaitForSeconds(1.5f);
-        if (isInBox) 
+       
+        if (isInBox && (Mathf.Abs(pancake.transform.localRotation.z) > 0.7f && Mathf.Abs(pancake.transform.localRotation.z) < 0.8f))
         {
             canCheck = false;
             pancake.GetComponent<PancakeControls>().validPosition = true;
@@ -46,6 +47,7 @@ public class PancakeChecker : MonoBehaviour
             this.enabled = false;
         } else
         {
+
             canCheck = true;
         }
     }
