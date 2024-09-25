@@ -5,9 +5,9 @@ using UnityEngine;
 public class PancakeControls : MonoBehaviour
 {
     public Rigidbody2D rb;
-    readonly float PANCAKE_FLIP_SPEED = 80f;
+    readonly float PANCAKE_FLIP_SPEED = 13f;
     readonly float HORIZONTAL_MOVESPEED = 155f;
-    readonly float MAX_FLIP = 10f;
+    readonly float MAX_FLIP = 1.5f;
     public bool validPosition = false;
     private bool canMove = true;
     private float rotationAcceleration = 0;
@@ -16,6 +16,7 @@ public class PancakeControls : MonoBehaviour
     private float deleteTimer;
     private bool deleteStarted = false;
     private bool jumped = false;
+    private bool triggeredCheck = false;
     private AudioSource flipSound;
     float rotationForFlip = 0;
 
@@ -80,11 +81,16 @@ public class PancakeControls : MonoBehaviour
         {
             return;
         }
-        if ((other.gameObject.CompareTag("Plate") && canMove))
+        if (other.gameObject.CompareTag("Plate") && !triggeredCheck)
         {
             PancakeChecker plateScript = other.gameObject.GetComponent<PancakeChecker>();
             if (plateScript.canCheck)
             {
+                if (deleteTimer != 0)
+                {
+                    deleteTimer += 0.5f;
+                }
+                triggeredCheck = true;
                 plateScript.canCheck = false;
                 StartCoroutine(plateScript.pancakeCheck());
             }
@@ -122,7 +128,6 @@ public class PancakeControls : MonoBehaviour
         if (!validPosition)
         {
             print("spawn pan");
-            print(transform.localRotation.z);
             gameManager.spawnNewPancake();
             Destroy(gameObject);
         }
