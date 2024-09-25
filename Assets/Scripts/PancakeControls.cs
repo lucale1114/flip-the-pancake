@@ -7,6 +7,7 @@ public class PancakeControls : MonoBehaviour
     public Rigidbody2D rb;
     readonly float PANCAKE_FLIP_SPEED = 13f;
     readonly float HORIZONTAL_MOVESPEED = 155f;
+    readonly float DEACCELERATION = 0.01f;
     readonly float MAX_FLIP = 1.5f;
     public bool validPosition = false;
     public bool canMove = false;
@@ -59,11 +60,11 @@ public class PancakeControls : MonoBehaviour
 
         if (rotationAcceleration > 0)
         {
-            rotationAcceleration -= 0.002f;
+            rotationAcceleration -= DEACCELERATION * Time.deltaTime;
         }
         else if (rotationAcceleration < 0)
         {
-            rotationAcceleration += 0.002f;
+            rotationAcceleration += DEACCELERATION * Time.deltaTime;
         }
     }
 
