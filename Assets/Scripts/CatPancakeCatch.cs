@@ -12,6 +12,7 @@ public class CatPancakeCatch : MonoBehaviour
     [SerializeField] float startPosXRight;
     [SerializeField] float startPosXLeft;
 
+    public PancakeManager pancakeManager;
     public GameObject leftPaw;
     public GameObject rightPaw;
     public GameObject pancake;
@@ -103,8 +104,14 @@ public class CatPancakeCatch : MonoBehaviour
                     leftPawInPlace = false;
                     resetPaws = false;
                     catchedPancake = false;
+                    Invoke("spawnNewPancake", 0.5f);
                 }
             }
         }
+    }
+
+    private void spawnNewPancake()
+    {
+        pancakeManager.spawnNewPancake();
     }
 }

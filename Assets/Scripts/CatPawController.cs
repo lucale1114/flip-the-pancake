@@ -48,8 +48,10 @@ public class CatPawController : MonoBehaviour
         {
             other.GetComponent<Rigidbody2D>().gravityScale = 0;
             other.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            other.GetComponent<PancakeControls>().canMove = false;
             Cat.GetComponent<CatPancakeCatch>().catchedPancake = true;
             Cat.GetComponent<CatPancakeCatch>().pancake = other.gameObject;
+
         }
     }
 

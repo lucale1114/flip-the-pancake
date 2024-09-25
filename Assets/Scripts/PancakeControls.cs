@@ -9,7 +9,7 @@ public class PancakeControls : MonoBehaviour
     readonly float HORIZONTAL_MOVESPEED = 155f;
     readonly float MAX_FLIP = 1.5f;
     public bool validPosition = false;
-    private bool canMove = true;
+    public bool canMove = false;
     private float rotationAcceleration = 0;
     public PancakeManager gameManager;
     public int pancakeScore = 1000;
@@ -149,7 +149,10 @@ public class PancakeControls : MonoBehaviour
         if (!validPosition)
         {
             gameManager.spawnNewPancake();
-            currentChecker.canCheck = true;
+            if (currentChecker != null)
+            {
+                currentChecker.canCheck = true;
+            }
             Destroy(gameObject);
         }
     }
