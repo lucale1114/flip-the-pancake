@@ -1278,6 +1278,7 @@ MonoBehaviour:
   panRotationSpeed: 100
   maxForce: 2
   timeSpaceKeyDown: 0
+  currentPancake: {fileID: 0}
   pivot: {fileID: 1847462850}
   rb: {fileID: 1847462851}
 --- !u!212 &787278493
@@ -1409,6 +1410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   originalPancake: {fileID: 1524040025}
+  pan: {fileID: 787278492}
   score: 0
   scoreCounter: {fileID: 322988456}
 --- !u!82 &999639327
@@ -1940,6 +1942,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1524040029}
   validPosition: 0
+  canMove: 0
   gameManager: {fileID: 999639326}
   pancakeScore: 1000
   splatSound: {fileID: 8300000, guid: 389b426a800d80742960fee4b2113523, type: 3}
@@ -2416,6 +2419,7 @@ MonoBehaviour:
   catPawOffsetX: 0.01
   startPosXRight: 0.5
   startPosXLeft: -0.5
+  pancakeManager: {fileID: 999639326}
   leftPaw: {fileID: 586491463}
   rightPaw: {fileID: 782223339}
   pancake: {fileID: 0}
