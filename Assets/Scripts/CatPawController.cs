@@ -17,6 +17,11 @@ public class CatPawController : MonoBehaviour
 
     void Update()
     {
+        UpdatePawPos();
+    }
+
+    void UpdatePawPos()
+    {
         if (nextPos.y > transform.localPosition.y)
         {
             transform.localPosition += new Vector3(0, speed * Time.deltaTime, 0);
@@ -33,7 +38,16 @@ public class CatPawController : MonoBehaviour
             GenerateNewPos();
         }
     }
-     
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Test");
+        if (other.CompareTag("Pancake"))
+        {
+
+        }
+    }
+
     void GenerateNewPos()
     {
         nextPos = new Vector2(transform.localPosition.x, Random.Range(minPos, maxPos));
