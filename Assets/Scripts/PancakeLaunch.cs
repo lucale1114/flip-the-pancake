@@ -18,8 +18,10 @@ public class PancakeLaunch : MonoBehaviour
 
     Vector2 originalPos;
 
+    public PancakeControls currentPancake;
     public GameObject pivot;
     public Rigidbody2D rb;
+
 
     private void Start()
     {
@@ -78,6 +80,8 @@ public class PancakeLaunch : MonoBehaviour
         rb.velocity = (Vector2)pivot.transform.up * launchForce * timeSpaceKeyDown;
 
         pancakeOffset = timeSpaceKeyDown * 2;
+
+        currentPancake.canMove = true;
 
         timeSpaceKeyDown = 0;
     }

@@ -6,6 +6,7 @@ using UnityEngine;
 public class PancakeManager : MonoBehaviour
 {
     public GameObject originalPancake;
+    public PancakeLaunch pan;
     public int score;
     public TextMeshProUGUI scoreCounter;
     void Start()
@@ -16,6 +17,7 @@ public class PancakeManager : MonoBehaviour
     public void spawnNewPancake()
     {
         GameObject newPancake = Instantiate(originalPancake);
+        pan.currentPancake = newPancake.GetComponent<PancakeControls>();
         newPancake.SetActive(true);
     }
 

@@ -8,6 +8,7 @@ public class CatPawController : MonoBehaviour
     [SerializeField] float minPos;
     [SerializeField] float maxPos;
 
+    public GameObject Cat;
     Vector2 nextPos;
 
     private void Start()
@@ -22,28 +23,34 @@ public class CatPawController : MonoBehaviour
 
     void UpdatePawPos()
     {
-        if (nextPos.y > transform.localPosition.y)
+        if(Cat.GetComponent<CatPancakeCatch>().catchedPancake == false)
         {
-            transform.localPosition += new Vector3(0, speed * Time.deltaTime, 0);
-        }
-        if (nextPos.y < transform.localPosition.y)
-        {
-            transform.localPosition += new Vector3(0, -speed * Time.deltaTime, 0);
-        }
+            if (nextPos.y > transform.localPosition.y)
+            {
+                transform.localPosition += new Vector3(0, speed * Time.deltaTime, 0);
+            }
+            if (nextPos.y < transform.localPosition.y)
+            {
+                transform.localPosition += new Vector3(0, -speed * Time.deltaTime, 0);
+            }
 
-        Vector2 distance = (Vector2)transform.localPosition - nextPos;
+            Vector2 distance = (Vector2)transform.localPosition - nextPos;
 
-        if (Vector2.SqrMagnitude(distance) < 0.01f)
-        {
-            GenerateNewPos();
+            if (Vector2.SqrMagnitude(distance) < 0.01f)
+            {
+                GenerateNewPos();
+            }
         }
     }
-
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Test");
         if (other.CompareTag("Pancake"))
         {
+            other.GetComponent<Rigidbody2D>().gravityScale = 0;
+            other.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            other.GetComponent<PancakeControls>().canMove = false;
+            Cat.GetComponent<CatPancakeCatch>().catchedPancake = true;
+            Cat.GetComponent<CatPancakeCatch>().pancake = other.gameObject;
 
         }
     }

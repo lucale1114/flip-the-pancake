@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PancakeChecker : MonoBehaviour
@@ -24,7 +25,6 @@ public class PancakeChecker : MonoBehaviour
     }
     private void newPancake()
     {
-        print("spawn check");
         pancake.GetComponent<PancakeControls>().enabled = false;
         pancake.tag = "Plate";
         gameManager.spawnNewPancake();
@@ -34,8 +34,14 @@ public class PancakeChecker : MonoBehaviour
     {
         print("checkinit");
         yield return new WaitForSeconds(1.5f);
-       
-        if (isInBox && (Mathf.Abs(pancake.transform.localRotation.z) > 0.7f && Mathf.Abs(pancake.transform.localRotation.z) < 0.8f))
+        if (pancake.IsDestroyed())
+        {
+            pancake = null;
+            yield return false;
+        }
+        float pancakeRotation = Mathf.Round(Mathf.Abs(pancake.transform.localRotation.eulerAngles.z));
+        print(pancakeRotation);
+        if (isInBox && (pancakeRotation == 0 || pancakeRotation == 180 || pancakeRotation == 360))
         {
             canCheck = false;
             pancake.GetComponent<PancakeControls>().validPosition = true;

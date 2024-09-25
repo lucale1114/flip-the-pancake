@@ -5,23 +5,27 @@ using UnityEngine;
 public class PancakeControls : MonoBehaviour
 {
     public Rigidbody2D rb;
-    readonly float PANCAKE_FLIP_SPEED = 80f;
+    readonly float PANCAKE_FLIP_SPEED = 13f;
     readonly float HORIZONTAL_MOVESPEED = 155f;
-    readonly float MAX_FLIP = 10f;
+    readonly float DEACCELERATION = 0.01f;
+    readonly float MAX_FLIP = 1.5f;
     public bool validPosition = false;
-    private bool canMove = true;
+    public bool canMove = false;
     private float rotationAcceleration = 0;
     public PancakeManager gameManager;
     public int pancakeScore = 1000;
     private float deleteTimer;
     private bool deleteStarted = false;
     private bool jumped = false;
+    private bool triggeredCheck = false;
     private AudioSource flipSound;
+    public AudioClip splatSound;
+    private PancakeChecker currentChecker;
     float rotationForFlip = 0;
 
     void Start()
     {
-        //flipSound = GetComponent<AudioSource>();
+        flipSound = GetComponent<AudioSource>();
         //rb.AddForce(new Vector2(400, 500));
     }
 
@@ -30,8 +34,7 @@ public class PancakeControls : MonoBehaviour
         rotationForFlip += rotationAcceleration;
         if (Mathf.Abs(rotationForFlip) > 360 )
         {
-            //flipSound.Play();
-            print("flip");
+            flipSound.Play();
             pancakeScore = Mathf.RoundToInt(pancakeScore * 1.2f);
             rotationForFlip = 0;
         }
@@ -57,11 +60,11 @@ public class PancakeControls : MonoBehaviour
 
         if (rotationAcceleration > 0)
         {
-            rotationAcceleration -= 0.002f;
+            rotationAcceleration -= DEACCELERATION * Time.deltaTime;
         }
         else if (rotationAcceleration < 0)
         {
-            rotationAcceleration += 0.002f;
+            rotationAcceleration += DEACCELERATION * Time.deltaTime;
         }
     }
 
@@ -74,17 +77,41 @@ public class PancakeControls : MonoBehaviour
         MovementControls();
     }
 
+    private void playSplat(float volume)
+    {
+        GameObject splatObj = new GameObject("splat");
+        AudioSource splatAudio = splatObj.AddComponent<AudioSource>();
+        splatAudio.clip = splatSound;
+        splatAudio.volume = volume;
+        splatAudio.pitch = Random.Range(0.75f, 1.5f);
+        if (volume > 1)
+        {
+            splatAudio.pitch = 0.66f;
+        }
+        splatAudio.Play();
+        Destroy(splatObj, 2);
+    }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Player") || validPosition)
         {
             return;
         }
-        if ((other.gameObject.CompareTag("Plate") && canMove))
+
+        playSplat(0.25f);
+  
+        if (other.gameObject.CompareTag("Plate") && !triggeredCheck)
         {
             PancakeChecker plateScript = other.gameObject.GetComponent<PancakeChecker>();
             if (plateScript.canCheck)
             {
+                currentChecker = plateScript;
+                if (deleteTimer != 0)
+                {
+                    deleteTimer += 0.5f;
+                }
+                triggeredCheck = true;
                 plateScript.canCheck = false;
                 StartCoroutine(plateScript.pancakeCheck());
             }
@@ -107,6 +134,7 @@ public class PancakeControls : MonoBehaviour
         }
         if (other.gameObject.name == "KillArea")
         {
+            playSplat(5);
             deleteTimer = 0;
         }
 
@@ -121,9 +149,11 @@ public class PancakeControls : MonoBehaviour
         }
         if (!validPosition)
         {
-            print("spawn pan");
-            print(transform.localRotation.z);
             gameManager.spawnNewPancake();
+            if (currentChecker != null)
+            {
+                currentChecker.canCheck = true;
+            }
             Destroy(gameObject);
         }
     }
