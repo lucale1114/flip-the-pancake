@@ -18,11 +18,13 @@ public class PancakeControls : MonoBehaviour
     private bool jumped = false;
     private bool triggeredCheck = false;
     private AudioSource flipSound;
+    public AudioClip splatSound;
+    private PancakeChecker currentChecker;
     float rotationForFlip = 0;
 
     void Start()
     {
-        //flipSound = GetComponent<AudioSource>();
+        flipSound = GetComponent<AudioSource>();
         //rb.AddForce(new Vector2(400, 500));
     }
 
@@ -31,8 +33,7 @@ public class PancakeControls : MonoBehaviour
         rotationForFlip += rotationAcceleration;
         if (Mathf.Abs(rotationForFlip) > 360 )
         {
-            //flipSound.Play();
-            print("flip");
+            flipSound.Play();
             pancakeScore = Mathf.RoundToInt(pancakeScore * 1.2f);
             rotationForFlip = 0;
         }
@@ -75,17 +76,36 @@ public class PancakeControls : MonoBehaviour
         MovementControls();
     }
 
+    private void playSplat(float volume)
+    {
+        GameObject splatObj = new GameObject("splat");
+        AudioSource splatAudio = splatObj.AddComponent<AudioSource>();
+        splatAudio.clip = splatSound;
+        splatAudio.volume = volume;
+        splatAudio.pitch = Random.Range(0.75f, 1.5f);
+        if (volume > 1)
+        {
+            splatAudio.pitch = 0.66f;
+        }
+        splatAudio.Play();
+        Destroy(splatObj, 2);
+    }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Player") || validPosition)
         {
             return;
         }
+
+        playSplat(0.25f);
+  
         if (other.gameObject.CompareTag("Plate") && !triggeredCheck)
         {
             PancakeChecker plateScript = other.gameObject.GetComponent<PancakeChecker>();
             if (plateScript.canCheck)
             {
+                currentChecker = plateScript;
                 if (deleteTimer != 0)
                 {
                     deleteTimer += 0.5f;
@@ -113,6 +133,7 @@ public class PancakeControls : MonoBehaviour
         }
         if (other.gameObject.name == "KillArea")
         {
+            playSplat(5);
             deleteTimer = 0;
         }
 
@@ -127,8 +148,8 @@ public class PancakeControls : MonoBehaviour
         }
         if (!validPosition)
         {
-            print("spawn pan");
             gameManager.spawnNewPancake();
+            currentChecker.canCheck = true;
             Destroy(gameObject);
         }
     }
