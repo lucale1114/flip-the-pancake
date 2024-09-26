@@ -5,8 +5,10 @@ using TMPro;
 
 public class ApplyScore : MonoBehaviour
 {
+    public TextMeshProUGUI scoreText;
     private void Start()
     {
-        GetComponent<TextMeshPro>().text = "Score: " + GameManager.instance.gameScore.ToString("00000");
+        scoreText.text = "Score: " + GameManager.instance.gameScore.ToString("00000");
+        Debug.Log("test");
     }
 }
