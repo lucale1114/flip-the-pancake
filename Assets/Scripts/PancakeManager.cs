@@ -51,6 +51,7 @@ public class PancakeManager : MonoBehaviour
 
     public void ChangeScene()
     {
+        GameManager.instance.SetScore(score);
         SceneManager.LoadScene("End Scene");
     }
 }

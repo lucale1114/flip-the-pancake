@@ -942,6 +942,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1605562653}
   - component: {fileID: 1605562655}
+  - component: {fileID: 1605562656}
   - component: {fileID: 1605562654}
   m_Layer: 5
   m_Name: ScoreCounter
@@ -1066,6 +1067,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1605562652}
   m_CullTransparentMesh: 1
+--- !u!114 &1605562656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1605562652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f7652d54219c194a842cd2389b933b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1766488485
 GameObject:
   m_ObjectHideFlags: 0
