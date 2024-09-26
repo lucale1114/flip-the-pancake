@@ -50,7 +50,7 @@ public class PancakeControls : MonoBehaviour
         float axisHorizontalDirection = Input.GetAxis("Horizontal");
         float axisVerticalDirection = Input.GetAxis("Vertical");
 
-        if (Input.GetKeyDown(KeyCode.UpArrow) && !jumped)
+        if ((axisVerticalDirection > 0 || Input.GetKeyDown(KeyCode.Space)) && !jumped)
         {
             jumped = true;
             jumpSound.Play();

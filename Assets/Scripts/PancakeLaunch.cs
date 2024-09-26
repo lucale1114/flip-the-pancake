@@ -55,13 +55,15 @@ public class PancakeLaunch : MonoBehaviour
 
     void RotatePan()
     {
+        float axis = Input.GetAxisRaw("Vertical");
+        print(axis);
         if (rotatePan)
         {
-            if (Input.GetKey("w"))
+            if (axis > 0)
             {
                 pivot.transform.Rotate(Vector3.forward * panRotationSpeed * Time.deltaTime);
             }
-            if (Input.GetKey("s"))
+            else if (axis < 0)
             {
                 pivot.transform.Rotate(-Vector3.forward * panRotationSpeed * Time.deltaTime);
             }
