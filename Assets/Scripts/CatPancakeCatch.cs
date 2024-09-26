@@ -19,6 +19,7 @@ public class CatPancakeCatch : MonoBehaviour
     public GameObject catGameObject;
     public Sprite defaultPaws;
     public Sprite catchedPaws;
+    public Animator catBlink;
     public bool playedNom;
 
     public SpriteRenderer leftPawSprite;
@@ -31,6 +32,11 @@ public class CatPancakeCatch : MonoBehaviour
     bool resetPaws = false;
 
     Vector2 pancakeLocalPosition;
+
+    private void Start()
+    {
+        catBlink.SetBool("CatBlink", true);
+    }
 
     private void Update()
     {
