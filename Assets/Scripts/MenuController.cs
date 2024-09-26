@@ -7,8 +7,16 @@ public class MenuController : MonoBehaviour
 {
     public GameObject menu;
     public GameObject credits;
+    public GameObject fadeScreen;
 
     public void ChangeScene()
+    {
+        fadeScreen.SetActive(true);
+        fadeScreen.GetComponent<Animator>().SetBool("Fade", true);
+        Invoke("newScene", 1);
+    }
+
+    void newScene()
     {
         SceneManager.LoadScene("Main Scene");
     }
