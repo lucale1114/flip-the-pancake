@@ -8,9 +8,14 @@ public class MenuController : MonoBehaviour
     public GameObject menu;
     public GameObject credits;
     public GameObject fadeScreen;
+    public AudioSource hoverSound;
+    public AudioSource pressedSound;
+    public GameObject musicObject;
 
     public void ChangeScene()
     {
+        DontDestroyOnLoad(musicObject);
+        pressedSound.Play();
         fadeScreen.SetActive(true);
         fadeScreen.GetComponent<Animator>().SetBool("Fade", true);
         Invoke("newScene", 1);
@@ -21,8 +26,14 @@ public class MenuController : MonoBehaviour
         SceneManager.LoadScene("Main Scene");
     }
 
+    public void MouseEntered()
+    {
+          hoverSound.Play();
+    }
+
     public void ChangeMenuToCredits(bool changeMenu)
     {
+        pressedSound.Play();
         if (changeMenu)
         {
             menu.SetActive(false);
@@ -37,6 +48,7 @@ public class MenuController : MonoBehaviour
 
     public void QuitGame()
     {
+        pressedSound.Play();
         Application.Quit();
     }
 }

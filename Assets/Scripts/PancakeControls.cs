@@ -159,7 +159,6 @@ public class PancakeControls : MonoBehaviour
         {
             if (!fallen)
             {
-                print("fallen");
                 GameObject splatObj = new GameObject("Error");
                 AudioSource audio = splatObj.AddComponent<AudioSource>();
                 audio.clip = errorSound.clip;
