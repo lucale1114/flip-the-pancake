@@ -31,7 +31,6 @@ public class PancakeControls : MonoBehaviour
         flipSound = GetComponents<AudioSource>()[0];
         jumpSound = GetComponents<AudioSource>()[1];
         errorSound = GetComponents<AudioSource>()[2];
-        Application.targetFrameRate = 60;
         //rb.AddForce(new Vector2(400, 500));
     }
 
