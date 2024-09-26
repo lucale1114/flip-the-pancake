@@ -9,6 +9,7 @@ public class PancakeManager : MonoBehaviour
 {
     public GameObject originalPancake;
     public GameObject fadeScreen;
+    public GameObject pancakeLauncher;
     public PancakeLaunch pan;
     public int score;
     public TextMeshProUGUI scoreCounter;
@@ -39,6 +40,7 @@ public class PancakeManager : MonoBehaviour
         pan.currentPancake = newPancake.GetComponent<PancakeControls>();
         newPancake.SetActive(true);
         pancakeAmmo--;
+        pancakeLauncher.GetComponent<PancakeLaunch>().pancakeSpawned = true;
         pancakeCounter.sprite = pancakeSprites[pancakeAmmo];
         
     }

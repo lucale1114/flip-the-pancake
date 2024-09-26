@@ -14,6 +14,7 @@ public class PancakeLaunch : MonoBehaviour
     bool selectForce = true;
     bool moveToOriginalPos;
     bool rotatePan;
+    public bool pancakeSpawned;
     public Animator tutorialFader;
     private bool playedAnimation;
 
@@ -39,18 +40,21 @@ public class PancakeLaunch : MonoBehaviour
 
     void PlayerInput()
     {
-        if (selectForce)
+        if (pancakeSpawned)
         {
-            if (Input.GetKey(KeyCode.Space) && !moveToOriginalPos && !rotatePan)
+            if (selectForce)
             {
-                timeSpaceKeyDown += Time.deltaTime;
-                timeSpaceKeyDown = Mathf.Clamp(timeSpaceKeyDown, 0, maxForce);
-            }
+                if (Input.GetKey(KeyCode.Space) && !moveToOriginalPos && !rotatePan)
+                {
+                    timeSpaceKeyDown += Time.deltaTime;
+                    timeSpaceKeyDown = Mathf.Clamp(timeSpaceKeyDown, 0, maxForce);
+                }
 
-            if (Input.GetKeyUp(KeyCode.Space) && !rotatePan)
-            {
-                selectForce = false;
-                rotatePan = true;
+                if (Input.GetKeyUp(KeyCode.Space) && !rotatePan)
+                {
+                    selectForce = false;
+                    rotatePan = true;
+                }
             }
         }
     }
@@ -91,6 +95,8 @@ public class PancakeLaunch : MonoBehaviour
 
     void LaunchPancake()
     {
+        pancakeSpawned = false;
+
         rb.velocity = (Vector2)pivot.transform.up * launchForce * timeSpaceKeyDown;
 
         pancakeOffset = timeSpaceKeyDown * 2;
