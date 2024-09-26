@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class PancakeManager : MonoBehaviour
 {
     public GameObject originalPancake;
+    public GameObject fadeScreen;
     public PancakeLaunch pan;
     public int score;
     public TextMeshProUGUI scoreCounter;
@@ -19,10 +20,11 @@ public class PancakeManager : MonoBehaviour
 
     public void spawnNewPancake()
     {
-        if (pancakeAmmo == 0)
+        if (pancakeAmmo == 9)
         {
-            SceneManager.LoadScene("End Scene");
-            return;
+            fadeScreen.SetActive(true);
+            fadeScreen.GetComponent<Animator>().SetBool("Fade", true);
+            Invoke("ChangeScene", 1);
         }
         if (GameObject.Find("PancakeClone"))
         {
@@ -38,5 +40,10 @@ public class PancakeManager : MonoBehaviour
     {
         score += panScore;
         scoreCounter.text = "Score: " + score.ToString("00000");
+    }
+
+    public void ChangeScene()
+    {
+        SceneManager.LoadScene("End Scene");
     }
 }
