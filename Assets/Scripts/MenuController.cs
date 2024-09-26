@@ -14,7 +14,10 @@ public class MenuController : MonoBehaviour
 
     public void ChangeScene()
     {
-        DontDestroyOnLoad(musicObject);
+        if (SceneManager.GetActiveScene().name != "End Scene")
+        {
+            DontDestroyOnLoad(musicObject);
+        }
         pressedSound.Play();
         fadeScreen.SetActive(true);
         fadeScreen.GetComponent<Animator>().SetBool("Fade", true);
