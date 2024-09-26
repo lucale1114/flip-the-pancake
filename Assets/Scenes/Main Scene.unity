@@ -1540,6 +1540,10 @@ MonoBehaviour:
   rightPaw: {fileID: 2141990953}
   pancake: {fileID: 0}
   catGameObject: {fileID: 2025708720}
+  defaultPaws: {fileID: 21300000, guid: 37208ecc837a2c746a989e56bd69ad3d, type: 3}
+  catchedPaws: {fileID: 21300000, guid: ca5a059e76d7baf4c8992eda961dbaa1, type: 3}
+  leftPawSprite: {fileID: 1972004863}
+  rightPawSprite: {fileID: 2141990956}
   catchedPancake: 0
 --- !u!4 &1490841708
 Transform:
@@ -2198,6 +2202,8 @@ MonoBehaviour:
   speed: 0.2
   minPos: -0.5
   maxPos: 1.1
+  SpriteRenderer: {fileID: 0}
+  CatchedPaw: {fileID: 21300000, guid: ca5a059e76d7baf4c8992eda961dbaa1, type: 3}
   Cat: {fileID: 1490841706}
 --- !u!212 &1972004863
 SpriteRenderer:
@@ -2376,6 +2382,8 @@ MonoBehaviour:
   speed: 0.2
   minPos: -0.5
   maxPos: 1.1
+  SpriteRenderer: {fileID: 0}
+  CatchedPaw: {fileID: 21300000, guid: ca5a059e76d7baf4c8992eda961dbaa1, type: 3}
   Cat: {fileID: 1490841706}
 --- !u!212 &2141990956
 SpriteRenderer:
@@ -2417,7 +2425,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 37208ecc837a2c746a989e56bd69ad3d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

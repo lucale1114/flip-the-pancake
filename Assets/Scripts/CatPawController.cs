@@ -8,11 +8,14 @@ public class CatPawController : MonoBehaviour
     [SerializeField] float minPos;
     [SerializeField] float maxPos;
 
+    public SpriteRenderer SpriteRenderer;
+    public Sprite CatchedPaw;
     public GameObject Cat;
     Vector2 nextPos;
 
     private void Start()
     {
+        SpriteRenderer = this.GetComponent<SpriteRenderer>();
         GenerateNewPos();
     }
 
@@ -46,6 +49,8 @@ public class CatPawController : MonoBehaviour
     {
         if (other.CompareTag("Pancake"))
         {
+            SpriteRenderer.sprite = CatchedPaw;
+            SpriteRenderer.sortingOrder = 2;
             other.GetComponent<Rigidbody2D>().gravityScale = 0;
             other.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             other.GetComponent<PancakeControls>().canMove = false;

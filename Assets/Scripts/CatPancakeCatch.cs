@@ -17,6 +17,11 @@ public class CatPancakeCatch : MonoBehaviour
     public GameObject rightPaw;
     public GameObject pancake;
     public GameObject catGameObject;
+    public Sprite defaultPaws;
+    public Sprite catchedPaws;
+
+    public SpriteRenderer leftPawSprite;
+    public SpriteRenderer rightPawSprite;
 
     public bool catchedPancake;
     bool rightPawInPlace = false;
@@ -86,10 +91,16 @@ public class CatPancakeCatch : MonoBehaviour
             if (resetPaws)
             {
                 pancake.SetActive(false);
+                leftPawSprite.sprite = defaultPaws;
+                rightPawSprite.sprite = defaultPaws;
+                leftPawSprite.sortingOrder = 0;
+                rightPawSprite.sortingOrder = 0;
+
                 if (leftPawLocalPosition.x > startPosXLeft && rightPawLocalPosition.x < startPosXRight)
                 {
                     if (leftPawLocalPosition.x > startPosXLeft)
                     {
+                        
                         leftPaw.transform.localPosition += new Vector3(-moveSpeed * Time.deltaTime * 1.2f, 0, 0);
                     }
                     if (rightPawLocalPosition.x < startPosXRight)
