@@ -37,7 +37,6 @@ public class PancakeChecker : MonoBehaviour
 
     public IEnumerator pancakeCheck()
     {
-        print("checkinit");
         yield return new WaitForSeconds(1.5f);
         if (pancake.IsDestroyed() || pancake == null )
         {
@@ -45,7 +44,6 @@ public class PancakeChecker : MonoBehaviour
             yield return false;
         }
         float pancakeRotation = Mathf.Round(Mathf.Abs(pancake.transform.localRotation.eulerAngles.z));
-        print(pancakeRotation);
         if (isInBox && (pancakeRotation == 0 || pancakeRotation == 180 || pancakeRotation == 360))
         {
             audioSource.clip = success;
@@ -55,7 +53,6 @@ public class PancakeChecker : MonoBehaviour
             pancake.GetComponent<PancakeControls>().validPosition = true;
             pancake.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
             gameManager.scoreAPancake(pancake.GetComponent<PancakeControls>().pancakeScore);
-            print("pancake");
             Invoke("newPancake", 0.5f);
             pancake.GetComponent<PancakeChecker>().canCheck = true;
             this.enabled = false;

@@ -9,6 +9,5 @@ public class ApplyScore : MonoBehaviour
     private void Start()
     {
         scoreText.text = "Score: " + GameManager.instance.gameScore.ToString("00000");
-        Debug.Log("test");
     }
 }
