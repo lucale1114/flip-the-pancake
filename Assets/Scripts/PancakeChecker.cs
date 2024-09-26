@@ -10,6 +10,11 @@ public class PancakeChecker : MonoBehaviour
     public bool canCheck;
     public GameObject pancake = null;
     public bool isInBox = false;
+
+    public AudioSource audioSource;
+    public AudioClip success;
+    public AudioClip error;
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (pancake == null && other.gameObject.CompareTag("Pancake"))
@@ -34,7 +39,7 @@ public class PancakeChecker : MonoBehaviour
     {
         print("checkinit");
         yield return new WaitForSeconds(1.5f);
-        if (pancake.IsDestroyed())
+        if (pancake.IsDestroyed() || pancake == null )
         {
             pancake = null;
             yield return false;
@@ -43,6 +48,8 @@ public class PancakeChecker : MonoBehaviour
         print(pancakeRotation);
         if (isInBox && (pancakeRotation == 0 || pancakeRotation == 180 || pancakeRotation == 360))
         {
+            audioSource.clip = success;
+            audioSource.Play();
             pancake.name = "PancakeTable";
             canCheck = false;
             pancake.GetComponent<PancakeControls>().validPosition = true;
@@ -54,7 +61,6 @@ public class PancakeChecker : MonoBehaviour
             this.enabled = false;
         } else
         {
-
             canCheck = true;
         }
     }

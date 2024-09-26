@@ -19,9 +19,11 @@ public class CatPancakeCatch : MonoBehaviour
     public GameObject catGameObject;
     public Sprite defaultPaws;
     public Sprite catchedPaws;
+    public bool playedNom;
 
     public SpriteRenderer leftPawSprite;
     public SpriteRenderer rightPawSprite;
+    public AudioClip nomSound;
 
     public bool catchedPancake;
     bool rightPawInPlace = false;
@@ -48,6 +50,7 @@ public class CatPancakeCatch : MonoBehaviour
 
             if (!leftPawInPlace || !rightPawInPlace)
             {
+
                 if (leftPawDistance.sqrMagnitude != 1f)
                 {
                     Vector2 newPosition = Vector2.MoveTowards((Vector2)leftPawLocalPosition, pancakeLocalPosition - offsetY, moveSpeed * Time.deltaTime);
@@ -56,6 +59,7 @@ public class CatPancakeCatch : MonoBehaviour
                 else
                 {
                     leftPawInPlace = true;
+
                 }
 
                 if (rightPawDistance.sqrMagnitude != 1f)
@@ -91,10 +95,19 @@ public class CatPancakeCatch : MonoBehaviour
             if (resetPaws)
             {
                 pancake.SetActive(false);
+                if (!playedNom)
+                {
+                    playedNom = true;
+                    gameObject.GetComponent<AudioSource>().clip = nomSound;
+                    gameObject.GetComponent<AudioSource>().Play();
+                }
+
                 leftPawSprite.sprite = defaultPaws;
                 rightPawSprite.sprite = defaultPaws;
                 leftPawSprite.sortingOrder = 0;
                 rightPawSprite.sortingOrder = 0;
+
+
 
                 if (leftPawLocalPosition.x > startPosXLeft && rightPawLocalPosition.x < startPosXRight)
                 {
@@ -123,6 +136,7 @@ public class CatPancakeCatch : MonoBehaviour
 
     private void spawnNewPancake()
     {
+        playedNom = false;
         pancakeManager.spawnNewPancake();
     }
 }

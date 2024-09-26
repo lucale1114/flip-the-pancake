@@ -19,13 +19,18 @@ public class PancakeControls : MonoBehaviour
     private bool jumped = false;
     private bool triggeredCheck = false;
     private AudioSource flipSound;
+    private AudioSource jumpSound;
+    private AudioSource errorSound;
     public AudioClip splatSound;
     private PancakeChecker currentChecker;
     float rotationForFlip = 0;
+    private bool fallen = false;
 
     void Start()
     {
-        flipSound = GetComponent<AudioSource>();
+        flipSound = GetComponents<AudioSource>()[0];
+        jumpSound = GetComponents<AudioSource>()[1];
+        errorSound = GetComponents<AudioSource>()[2];
         Application.targetFrameRate = 60;
         //rb.AddForce(new Vector2(400, 500));
     }
@@ -49,6 +54,7 @@ public class PancakeControls : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.UpArrow) && !jumped)
         {
             jumped = true;
+            jumpSound.Play();
             rb.velocity = new Vector3(rb.velocity.x, 10);
         }
 
@@ -135,6 +141,7 @@ public class PancakeControls : MonoBehaviour
         }
         if (other.gameObject.name == "KillArea")
         {
+            fallen = true;
             playSplat(5);
             deleteTimer = 0;
         }
@@ -150,12 +157,23 @@ public class PancakeControls : MonoBehaviour
         }
         if (!validPosition)
         {
+            if (!fallen)
+            {
+                print("fallen");
+                GameObject splatObj = new GameObject("Error");
+                AudioSource audio = splatObj.AddComponent<AudioSource>();
+                audio.clip = errorSound.clip;
+                audio.Play();
+            }
+
             gameManager.spawnNewPancake();
             if (currentChecker != null)
             {
                 currentChecker.canCheck = true;
             }
             Destroy(gameObject);
+
+
         }
     }
 }

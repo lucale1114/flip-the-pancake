@@ -11,10 +11,13 @@ public class CatPawController : MonoBehaviour
     public SpriteRenderer SpriteRenderer;
     public Sprite CatchedPaw;
     public GameObject Cat;
+    public AudioSource CatAudio;
+    public AudioClip[] CatClips;
     Vector2 nextPos;
 
     private void Start()
     {
+        CatAudio = Cat.GetComponent<AudioSource>();
         SpriteRenderer = this.GetComponent<SpriteRenderer>();
         GenerateNewPos();
     }
@@ -47,10 +50,13 @@ public class CatPawController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Pancake"))
+        if (other.CompareTag("Pancake") && Cat.GetComponent<CatPancakeCatch>().catchedPancake == false)
         {
             SpriteRenderer.sprite = CatchedPaw;
             SpriteRenderer.sortingOrder = 2;
+            CatAudio.clip = CatClips[Random.Range(0, CatClips.Length)];
+            CatAudio.pitch = Random.Range(0.9f, 1.1f);
+            CatAudio.Play();
             other.GetComponent<Rigidbody2D>().gravityScale = 0;
             other.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             other.GetComponent<PancakeControls>().canMove = false;

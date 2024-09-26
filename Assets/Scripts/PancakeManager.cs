@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PancakeManager : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class PancakeManager : MonoBehaviour
     public PancakeLaunch pan;
     public int score;
     public TextMeshProUGUI scoreCounter;
+    public int pancakeAmmo = 10;
+
     void Start()
     {
         spawnNewPancake();
@@ -16,6 +19,11 @@ public class PancakeManager : MonoBehaviour
 
     public void spawnNewPancake()
     {
+        if (pancakeAmmo == 0)
+        {
+            SceneManager.LoadScene("End Scene");
+            return;
+        }
         if (GameObject.Find("PancakeClone"))
         {
             return;
@@ -23,6 +31,7 @@ public class PancakeManager : MonoBehaviour
         GameObject newPancake = Instantiate(originalPancake);
         pan.currentPancake = newPancake.GetComponent<PancakeControls>();
         newPancake.SetActive(true);
+        pancakeAmmo--;
     }
 
     public void scoreAPancake(int panScore)

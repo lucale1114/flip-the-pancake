@@ -89,6 +89,7 @@ public class PancakeLaunch : MonoBehaviour
 
         StartCoroutine(CanMovePancake(currentPancake));
 
+        gameObject.GetComponent<AudioSource>().Play();
         timeSpaceKeyDown = 0;
     }
 
