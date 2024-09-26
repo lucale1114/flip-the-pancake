@@ -20,7 +20,7 @@ public class PancakeManager : MonoBehaviour
 
     public void spawnNewPancake()
     {
-        if (pancakeAmmo == 9)
+        if (pancakeAmmo == 0)
         {
             fadeScreen.SetActive(true);
             fadeScreen.GetComponent<Animator>().SetBool("Fade", true);
