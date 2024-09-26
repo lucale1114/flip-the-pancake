@@ -14,13 +14,15 @@ public class PancakeLaunch : MonoBehaviour
     bool selectForce = true;
     bool moveToOriginalPos;
     bool rotatePan;
+    public Animator tutorialFader;
+    private bool playedAnimation;
 
     Vector2 originalPos;
 
     public PancakeControls currentPancake;
     public GameObject pivot;
     public Rigidbody2D rb;
-
+    
 
     private void Start()
     {
@@ -56,7 +58,6 @@ public class PancakeLaunch : MonoBehaviour
     void RotatePan()
     {
         float axis = Input.GetAxisRaw("Vertical");
-        print(axis);
         if (rotatePan)
         {
             if (axis > 0)
@@ -70,6 +71,12 @@ public class PancakeLaunch : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                if (!playedAnimation)
+                {
+                    playedAnimation = true;
+                    tutorialFader.SetBool("Fade", true);
+                    print("played");
+                }
                 rotatePan = false;
                 LaunchPancake();
             }
