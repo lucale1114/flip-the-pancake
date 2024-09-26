@@ -6,7 +6,7 @@ public class PancakeControls : MonoBehaviour
 {
     public Rigidbody2D rb;
     readonly float PANCAKE_FLIP_SPEED = 1770f;
-    readonly float HORIZONTAL_MOVESPEED = 155f;
+    readonly float HORIZONTAL_MOVESPEED = 300f;
     readonly float DEACCELERATION = 10f;
     readonly float MAX_FLIP = 13f;
     public bool validPosition = false;
@@ -62,7 +62,7 @@ public class PancakeControls : MonoBehaviour
         rotationAcceleration = Mathf.Clamp(rotationAcceleration, -MAX_FLIP, MAX_FLIP);
         axisVerticalDirection = Mathf.Min(axisVerticalDirection, 0);
         checkForFlip();
-        rb.SetRotation(rb.rotation + rotationAcceleration);
+        rb.SetRotation(rb.rotation + rotationAcceleration * Time.deltaTime * 50);
         rb.AddForce(new Vector2(axisHorizontalDirection * HORIZONTAL_MOVESPEED * Time.deltaTime, axisVerticalDirection / 3f));
 
         if (rotationAcceleration > 0)
