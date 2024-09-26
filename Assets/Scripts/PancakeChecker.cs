@@ -43,12 +43,13 @@ public class PancakeChecker : MonoBehaviour
         print(pancakeRotation);
         if (isInBox && (pancakeRotation == 0 || pancakeRotation == 180 || pancakeRotation == 360))
         {
+            pancake.name = "PancakeTable";
             canCheck = false;
             pancake.GetComponent<PancakeControls>().validPosition = true;
             pancake.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
             gameManager.scoreAPancake(pancake.GetComponent<PancakeControls>().pancakeScore);
             print("pancake");
-            Invoke("newPancake", 1);
+            Invoke("newPancake", 0.5f);
             pancake.GetComponent<PancakeChecker>().canCheck = true;
             this.enabled = false;
         } else

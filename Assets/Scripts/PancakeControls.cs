@@ -94,7 +94,7 @@ public class PancakeControls : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Player") || validPosition)
+        if ((other.gameObject.CompareTag("Player") && canMove == false) || validPosition)
         {
             return;
         }

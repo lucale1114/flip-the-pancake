@@ -75,13 +75,19 @@ public class PancakeLaunch : MonoBehaviour
         }
     }
 
+    IEnumerator CanMovePancake(PancakeControls currentPancake)
+    {
+        yield return new WaitForSeconds(0.2f);
+        currentPancake.canMove = true;
+    }
+
     void LaunchPancake()
     {
         rb.velocity = (Vector2)pivot.transform.up * launchForce * timeSpaceKeyDown;
 
         pancakeOffset = timeSpaceKeyDown * 2;
 
-        currentPancake.canMove = true;
+        StartCoroutine(CanMovePancake(currentPancake));
 
         timeSpaceKeyDown = 0;
     }
