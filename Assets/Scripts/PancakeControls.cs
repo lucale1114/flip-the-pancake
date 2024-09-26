@@ -37,7 +37,7 @@ public class PancakeControls : MonoBehaviour
     private void checkForFlip()
     {
         rotationForFlip += rotationAcceleration;
-        if (Mathf.Abs(rotationForFlip) > 360 )
+        if (Mathf.Abs(rotationForFlip) > 4200)
         {
             flipSound.Play();
             pancakeScore = Mathf.RoundToInt(pancakeScore * 1.2f);
@@ -61,7 +61,7 @@ public class PancakeControls : MonoBehaviour
         rotationAcceleration = Mathf.Clamp(rotationAcceleration, -MAX_FLIP, MAX_FLIP);
         axisVerticalDirection = Mathf.Min(axisVerticalDirection, 0);
         checkForFlip();
-        rb.SetRotation(rb.rotation + rotationAcceleration * Time.deltaTime * 50);
+        rb.SetRotation(rb.rotation + (rotationAcceleration * Time.deltaTime) * 50);
         rb.AddForce(new Vector2(axisHorizontalDirection * HORIZONTAL_MOVESPEED * Time.deltaTime, axisVerticalDirection / 3f));
 
         if (rotationAcceleration > 0)
