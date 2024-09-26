@@ -26,8 +26,13 @@ public class PancakeControls : MonoBehaviour
     float rotationForFlip = 0;
     private bool fallen = false;
 
+    private int yPoint = 4;
+    private int maxY = 4;
+
+    public Camera cam;
     void Start()
     {
+        cam = Camera.main;
         flipSound = GetComponents<AudioSource>()[0];
         jumpSound = GetComponents<AudioSource>()[1];
         errorSound = GetComponents<AudioSource>()[2];
@@ -37,7 +42,7 @@ public class PancakeControls : MonoBehaviour
     private void checkForFlip()
     {
         rotationForFlip += rotationAcceleration;
-        if (Mathf.Abs(rotationForFlip) > 4200)
+        if (Mathf.Abs(rotationForFlip) > 1050)
         {
             flipSound.Play();
             pancakeScore = Mathf.RoundToInt(pancakeScore * 1.2f);
@@ -79,6 +84,13 @@ public class PancakeControls : MonoBehaviour
         if (!canMove)
         {
             return;
+        }
+        if (transform.position.y > yPoint)
+        {
+            print(transform.position.y);
+            float cameraPos = Mathf.Min(0 + transform.position.y - yPoint, maxY);
+            print(cameraPos);
+            cam.transform.position = new Vector3(cam.transform.position.x, cameraPos, -10);
         }
         MovementControls();
     }
