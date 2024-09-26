@@ -5,10 +5,10 @@ using UnityEngine;
 public class PancakeControls : MonoBehaviour
 {
     public Rigidbody2D rb;
-    readonly float PANCAKE_FLIP_SPEED = 13f;
+    readonly float PANCAKE_FLIP_SPEED = 1770f;
     readonly float HORIZONTAL_MOVESPEED = 155f;
-    readonly float DEACCELERATION = 0.01f;
-    readonly float MAX_FLIP = 1.5f;
+    readonly float DEACCELERATION = 10f;
+    readonly float MAX_FLIP = 13f;
     public bool validPosition = false;
     public bool canMove = false;
     private float rotationAcceleration = 0;
@@ -26,6 +26,7 @@ public class PancakeControls : MonoBehaviour
     void Start()
     {
         flipSound = GetComponent<AudioSource>();
+        Application.targetFrameRate = 60;
         //rb.AddForce(new Vector2(400, 500));
     }
 
