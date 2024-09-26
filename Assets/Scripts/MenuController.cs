@@ -12,6 +12,7 @@ public class MenuController : MonoBehaviour
     public AudioSource pressedSound;
     public GameObject musicObject;
     public GameObject sadCat;
+    public AudioSource happyCatSound;
 
     public void ChangeScene()
     {
@@ -58,6 +59,7 @@ public class MenuController : MonoBehaviour
 
     public void ActivateHappyCatScreen()
     {
+        happyCatSound.Play();
         sadCat.SetActive(true);
     }
 }
