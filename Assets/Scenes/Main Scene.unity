@@ -167,6 +167,7 @@ MonoBehaviour:
   gameManager: {fileID: 238638591}
   pancakeScore: 1000
   splatSound: {fileID: 8300000, guid: 389b426a800d80742960fee4b2113523, type: 3}
+  cam: {fileID: 0}
 --- !u!50 &163776139
 Rigidbody2D:
   serializedVersion: 4
@@ -1091,6 +1092,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originalPancake: {fileID: 163776137}
   fadeScreen: {fileID: 437156553}
+  pancakeLauncher: {fileID: 858348031}
   pan: {fileID: 858348036}
   score: 0
   scoreCounter: {fileID: 589628423}
@@ -2345,6 +2347,7 @@ MonoBehaviour:
   panRotationSpeed: 100
   maxForce: 2
   timeSpaceKeyDown: 0
+  pancakeSpawned: 0
   tutorialFader: {fileID: 382347888}
   currentPancake: {fileID: 163776138}
   pivot: {fileID: 1200460938}
